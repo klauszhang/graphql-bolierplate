@@ -3,19 +3,21 @@ const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { createServer } = require('http');
 const { authenticate } = require('./auth');
-const Users = require('./store/users');
+const UserStore = require('./store/UserStore');
 const schema = require('./schema');
 
 const PORT = 3000;
 
-const users = new Users({ hao: { username: 'hao', password: 'secret' } });
+const userStore = new UserStore({
+  hao: { username: 'hao', password: 'secret' }
+});
 const token = 'token-hao|secret';
 
 const start = async () => {
   const app = express();
 
   const options = async (req, res) => {
-    const user = await authenticate(req, users);
+    const user = await authenticate(req, userStore);
     if (!user) {
       res.status(401).send('authentication failed!');
     }

@@ -1,8 +1,12 @@
-class Users {
+/**
+ * naive way..for test only... replace it when in production
+ * 
+ */
+
+class UserStore {
   constructor(rawData) {
     this.data = rawData;
     this.findOne = ({ username, password }) => {
-      // naive way.. replace it when in production
       const user = this.data[username];
       if (user) {
         if (user.password == password) {
@@ -14,4 +18,4 @@ class Users {
   }
 }
 
-module.exports = Users;
+module.exports = UserStore;
