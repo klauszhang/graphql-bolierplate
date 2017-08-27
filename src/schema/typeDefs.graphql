@@ -1,0 +1,8 @@
+type Product {
+  id: ID!
+  name: String!
+}
+
+type Query {
+  allProducts: [Product!]!
+}
