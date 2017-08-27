@@ -1,10 +1,10 @@
 module.exports = {
   Query: {
-    allProducts: async (root, data, context) => {
+    allProducts: async (root, data, { user }) => {
       return [
         {
           id: '1',
-          name: 'hello'
+          name: `hello ${user.username}`
         }
       ];
     }
