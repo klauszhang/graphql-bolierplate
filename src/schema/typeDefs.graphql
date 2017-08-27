@@ -4,6 +4,15 @@ type Product {
   id: ID!
   # name of the product
   name: String!
+  # description of the product
+  description: String!
+  # stock keep unit
+  sku: String!
+}
+
+input ProductPageInput {
+  first: Int
+  after: Int
 }
 
 type Category {
@@ -14,6 +23,11 @@ type Category {
 }
 
 type Query {
-  allProducts: [Product]!
+  allProducts(page: ProductPageInput): [Product!]!
+  # find a product by id
+  ProductById(id: Int!): Product!
+  # find a product by sku
+  ProductBySku(sku: String!): Product!
+  #get all categories
   allCategories: [Category]!
 }

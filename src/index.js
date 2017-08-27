@@ -2,19 +2,21 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { createServer } = require('http');
-
+const ProductStore = require('./stores/ProductStore');
 const schema = require('./schema');
 const CategoryStore = require('./stores/CategoryStore');
 
 const PORT = 3000;
 const categoryStore = new CategoryStore();
+const productStore = new ProductStore();
 
 const start = async () => {
   const app = express();
 
   const options = {
     context: {
-      categoryStore
+      categoryStore,
+      productStore
     },
     schema
   };
