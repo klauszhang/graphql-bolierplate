@@ -6,6 +6,11 @@ const { products: initialData } = require('./mock');
 class ProductStore {
   constructor() {
     this._data = initialData;
+
+    this._lastId = this._data.sort((prev, next) => prev.id - next.id)[
+      this._data.length - 1
+    ].id;
+
     this.findById = (id) => {
       const result = this._data.find((entry) => entry.id === id);
       return result;
@@ -20,6 +25,13 @@ class ProductStore {
     };
     this.findBySku = (sku) => {
       return this._data.find((entry) => entry.sku === sku);
+    };
+
+    this.insert = (product) => {
+      this._lastId++;
+      product.id = this._lastId;
+      this._data.push(product);
+      return product;
     };
   }
 }

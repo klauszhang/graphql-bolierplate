@@ -1,10 +1,10 @@
 const MIN_PRODUCT_PER_CATEGORY = 1;
-const MAX_PRODUCT_PER_CATEGORY = 100;
+const MAX_PRODUCT_PER_CATEGORY = 20;
 const MIN_CATEGORY_PER_PRODUCT = 1;
 const MAX_CATEGORY_PER_PRODUCT = 5;
 
-const category = require('./category.json');
-const product = require('./products.json');
+const category = require('./category.json').slice(0, 5);
+const product = require('./products.json').slice(0, 20);
 
 const catLen = category.length;
 const prodLen = product.length;

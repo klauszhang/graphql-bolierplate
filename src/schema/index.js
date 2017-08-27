@@ -7,7 +7,7 @@ const typeDefs = fs.readFileSync(
   path.resolve(__dirname, 'typeDefs.graphql'),
   'utf8'
 );
-
+console.log('load schema');
 module.exports = makeExecutableSchema({
   typeDefs,
   resolvers
