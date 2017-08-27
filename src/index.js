@@ -7,8 +7,10 @@ const { authenticate } = require('./auth');
 const UserStore = require('./store/UserStore');
 const ProductStore = require('./stores/ProductStore');
 const schema = require('./schema');
+const CategoryStore = require('./stores/CategoryStore');
 
 const PORT = 3000;
+const categoryStore = new CategoryStore();
 const productStore = new ProductStore();
 
 const userStore = new UserStore({
@@ -27,6 +29,7 @@ const start = async () => {
     return {
       context: {
         user,
+        categoryStore,
         productStore
       },
       schema

@@ -8,6 +8,7 @@ type Product {
   description: String!
   # stock keep unit
   sku: String!
+  categories: [Category]!
 }
 
 input ProductPageInput {
@@ -15,10 +16,19 @@ input ProductPageInput {
   after: Int
 }
 
+type Category {
+  id: ID!
+  name: String!
+  description: String!
+  products: [Product]!
+}
+
 type Query {
   allProducts(page: ProductPageInput): [Product!]!
   # find a product by id
-  ProductById(id: Int!): Product!
+  productById(id: Int!): Product!
   # find a product by sku
-  ProductBySku(sku: String!): Product!
+  productBySku(sku: String!): Product!
+  #get all categories
+  allCategories: [Category]!
 }
