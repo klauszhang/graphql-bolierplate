@@ -11,9 +11,16 @@ type Product {
   categories: [Category]!
 }
 
+input ProductInput {
+  name: String!
+  sku: String!
+  description: String
+  categoryIds: [ID]
+}
+
 input ProductPageInput {
-  first: Int
-  after: Int
+  first: Int = 10
+  after: Int = 1
 }
 
 type Category {
@@ -31,4 +38,8 @@ type Query {
   productBySku(sku: String!): Product!
   #get all categories
   allCategories: [Category]!
+}
+
+type Mutation {
+  createProduct(product: ProductInput): Product!
 }

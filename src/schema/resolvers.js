@@ -1,14 +1,8 @@
 module.exports = {
   Query: {
-    allProducts: async (
-      root,
-      { page = { first: 10, after: 1 } },
-      { productStore }
-    ) => {
+    allProducts: async (root, { page }, { productStore }) => {
       const { first, after } = page;
-      return productStore.findAll(first, after).map((item) => {
-        return item;
-      });
+      return productStore.findAll(first, after);
     },
     productById: async (_, { id }, { productStore }) => {
       return productStore.findById(id);
@@ -18,6 +12,11 @@ module.exports = {
     },
     allCategories: async (_, data, { categoryStore }) => {
       return categoryStore.getAll();
+    }
+  },
+  Mutation: {
+    createProduct: async (root, { product }, { productStore }) => {
+      return productStore.insert(product);
     }
   },
   Category: {
