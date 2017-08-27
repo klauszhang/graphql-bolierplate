@@ -4,7 +4,7 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { createServer } = require('http');
 
 const { authenticate } = require('./auth');
-const UserStore = require('./store/UserStore');
+const UserStore = require('./stores/UserStore');
 const ProductStore = require('./stores/ProductStore');
 const schema = require('./schema');
 const CategoryStore = require('./stores/CategoryStore');
