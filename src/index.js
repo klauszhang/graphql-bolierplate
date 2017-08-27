@@ -2,11 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { createServer } = require('http');
+
 const { authenticate } = require('./auth');
 const UserStore = require('./store/UserStore');
+const ProductStore = require('./stores/ProductStore');
 const schema = require('./schema');
 
 const PORT = 3000;
+const productStore = new ProductStore();
 
 const userStore = new UserStore({
   hao: { username: 'hao', password: 'secret' }
@@ -23,7 +26,8 @@ const start = async () => {
     }
     return {
       context: {
-        user
+        user,
+        productStore
       },
       schema
     };
