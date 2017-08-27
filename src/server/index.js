@@ -10,6 +10,9 @@ const PORT = 3000;
 const start = async () => {
   const app = express();
 
+  app.use(express.static('public'));
+  app.set('view engine', 'ejs');
+
   app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
   app.use(
     '/graphiql',
@@ -18,9 +21,16 @@ const start = async () => {
     })
   );
 
+  app.get('*', (req, res) => {
+    res.render('index');
+  });
+
   const server = createServer(app);
   server.listen(PORT, () => {
-    console.log(`Graphql server up and running on port ${PORT}`);
+    console.info('server up and running.');
+    console.info(`Client url: \t\t http://localhost:${PORT}`);
+    console.info(`GraphQL endpoint:\t http://localhost:${PORT}/graphql`);
+    console.info(`GraphiQL endpoint:\t http://localhost:${PORT}/graphiql`);
   });
 };
 
