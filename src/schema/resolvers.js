@@ -1,30 +1,35 @@
 module.exports = {
   Query: {
-<<<<<<< HEAD
-    allProducts: async (root, data, context) => {
-      return [
-        {
-          id: '1',
-          name: 'hello'
-        }
-      ];
+    allProducts: async (
+      root,
+      { page = { first: 10, after: 1 } },
+      { productStore }
+    ) => {
+      const { first, after } = page;
+      return productStore.findAll(first, after).map((item) => {
+        return item;
+      });
+    },
+    productById: async (_, { id }, { productStore }) => {
+      return productStore.findById(id);
+    },
+    productBySku: async (_, { sku }, { productStore }) => {
+      return productStore.findBySku(sku);
     },
     allCategories: async (_, data, { categoryStore }) => {
       return categoryStore.getAll();
-=======
-    allProducts: async (root, data, { productStore }) => {
-      const { first, after } = data.page;
-      return productStore.findAll(first, after);
-    },
-    ProductById: async (_, { id }, { productStore }) => {
-      return productStore.findById(id);
-    },
-    ProductBySku: async (_, { sku }, { productStore }) => {
-      return productStore.findBySku(sku);
->>>>>>> 3.with-input
     }
   },
   Category: {
-    products: async (root, data, { productStore }) => {}
+    products: async (root, data, { productStore }) => {
+      const { productIds } = root;
+      return productIds.map((id) => productStore.findById(id));
+    }
+  },
+  Product: {
+    categories: async (root, _, { categoryStore }) => {
+      const { categoryIds } = root;
+      return categoryIds.map((id) => categoryStore.findById(id));
+    }
   }
 };

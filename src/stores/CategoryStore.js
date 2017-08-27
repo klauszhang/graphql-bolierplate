@@ -1,11 +1,4 @@
-const initialData = [
-  {
-    id: 1,
-    name: 'cat1',
-    description: 'the first category',
-    productIds: [1, 2, 3, 4]
-  }
-];
+const { categories: initialData } = require('./mock');
 
 class CategoryStore {
   constructor() {
@@ -16,6 +9,9 @@ class CategoryStore {
       if (afterIndex !== -1) {
         return this._data.slice(afterIndex, afterIndex + first);
       }
+    };
+    this.findById = (id) => {
+      return this._data.find((entry) => entry.id === id);
     };
   }
 }

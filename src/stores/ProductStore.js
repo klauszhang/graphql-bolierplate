@@ -1,11 +1,11 @@
 /**
  * dummy store for demo purpose
  */
-const data = require('./mock/products.json');
+const { products: initialData } = require('./mock');
 
 class ProductStore {
   constructor() {
-    this._data = data;
+    this._data = initialData;
     this.findById = (id) => {
       const result = this._data.find((entry) => entry.id === id);
       return result;
