@@ -7,6 +7,12 @@ module.exports = {
           name: 'hello'
         }
       ];
+    },
+    allCategories: async (_, data, { categoryStore }) => {
+      return categoryStore.getAll();
     }
+  },
+  Category: {
+    products: async (root, data, { productStore }) => {}
   }
 };

@@ -4,13 +4,22 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { createServer } = require('http');
 
 const schema = require('./schema');
+const CategoryStore = require('./stores/CategoryStore');
 
 const PORT = 3000;
+const categoryStore = new CategoryStore();
 
 const start = async () => {
   const app = express();
 
-  app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+  const options = {
+    context: {
+      categoryStore
+    },
+    schema
+  };
+
+  app.use('/graphql', bodyParser.json(), graphqlExpress(options));
   app.use(
     '/graphiql',
     graphiqlExpress({

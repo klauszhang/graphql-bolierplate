@@ -6,6 +6,14 @@ type Product {
   name: String!
 }
 
+type Category {
+  id: ID!
+  name: String!
+  description: String!
+  products: [Product]!
+}
+
 type Query {
-  allProducts: [Product!]!
+  allProducts: [Product]!
+  allCategories: [Category]!
 }
