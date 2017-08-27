@@ -1,5 +1,8 @@
+# a product
 type Product {
+  # id of the product
   id: ID!
+  # name of the product
   name: String!
 }
 
