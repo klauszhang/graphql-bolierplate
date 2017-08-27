@@ -1,8 +1,13 @@
 import React from 'react';
+import ProductPage from './components/ProductPage';
 
 class Root extends React.Component {
   render() {
-    return <div>app works!</div>;
+    return (
+      <div>
+        <ProductPage />
+      </div>
+    );
   }
 }
 

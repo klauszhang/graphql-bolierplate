@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const WebpackShellPlugin = require('webpack-shell-plugin');
 
 const config = {
   resolve: {
@@ -21,7 +22,8 @@ const config = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['react', 'env', 'stage-2']
+            presets: ['react', 'env', 'stage-2'],
+            plugins: ['relay']
           }
         }
       },
@@ -38,6 +40,11 @@ const config = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor'
+    }),
+    new WebpackShellPlugin({
+      onBuildStart: [
+        'relay-compiler --src ./src/client --schema ./src/server/schema/typeDefs.graphql --watch'
+      ]
     })
   ]
 };
