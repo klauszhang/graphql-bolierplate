@@ -4,14 +4,8 @@
   "main": "./src/server/index.js",
   "scripts": {
     "start": "node ./src/server/index.js",
-<<<<<<< HEAD
-    "start:dev": "nodemon ./src/server/index.js --watch ./src/server",
-    "webpack": "webpack -wd",
-    "compile-schema": "relay-compiler --src ./src/client --schema ./src/server/schema/typeDefs.graphql --watch"
-=======
     "start:dev": "nodemon ./src/server/index.js --watch ./src/server --watch ./src/schema",
     "webpack": "webpack -wd"
->>>>>>> 5.1.only-react
   },
   "license": "MIT",
   "devDependencies": {
