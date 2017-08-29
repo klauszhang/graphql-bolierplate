@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductPage from './components/ProductPage';
 
-class Root extends React.Component {
+class App extends React.Component {
   render() {
     return (
       <div>
@@ -11,4 +11,4 @@ class Root extends React.Component {
   }
 }
 
-export default Root;
+export default App;

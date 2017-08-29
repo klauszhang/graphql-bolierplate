@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const { createServer } = require('http');
 const graphqlHTTP = require('express-graphql');
 
-const schema = require('./schema');
+const schema = require('../schema');
 
 const PORT = 3000;
 

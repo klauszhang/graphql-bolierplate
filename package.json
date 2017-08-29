@@ -4,9 +4,14 @@
   "main": "./src/server/index.js",
   "scripts": {
     "start": "node ./src/server/index.js",
+<<<<<<< HEAD
     "start:dev": "nodemon ./src/server/index.js --watch ./src/server",
     "webpack": "webpack -wd",
     "compile-schema": "relay-compiler --src ./src/client --schema ./src/server/schema/typeDefs.graphql --watch"
+=======
+    "start:dev": "nodemon ./src/server/index.js --watch ./src/server --watch ./src/schema",
+    "webpack": "webpack -wd"
+>>>>>>> 5.1.only-react
   },
   "license": "MIT",
   "devDependencies": {
@@ -33,8 +38,8 @@
     "body-parser": "^1.17.2",
     "ejs": "^2.5.7",
     "express": "^4.15.4",
-    "express-graphql": "^0.6.7",
     "graphql": "^0.10.5",
+    "express-graphql": "^0.6.11",
     "graphql-tools": "^1.2.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
