@@ -1,9 +1,9 @@
 import React from 'react';
 
-class Root extends React.Component {
+class App extends React.Component {
   render() {
     return <div>app works!</div>;
   }
 }
 
-export default Root;
+export default App;

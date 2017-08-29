@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { createServer } = require('http');
+const graphqlHTTP = require('express-graphql');
 
-const schema = require('./schema');
+const schema = require('../schema');
 
 const PORT = 3000;
 
@@ -13,12 +13,10 @@ const start = async () => {
   app.use(express.static('public'));
   app.set('view engine', 'ejs');
 
-  app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
   app.use(
-    '/graphiql',
-    graphiqlExpress({
-      endpointURL: '/graphql'
-    })
+    '/graphql',
+    bodyParser.json(),
+    graphqlHTTP({ schema, graphiql: true })
   );
 
   app.get('*', (req, res) => {
@@ -30,7 +28,7 @@ const start = async () => {
     console.info('server up and running.');
     console.info(`Client url: \t\t http://localhost:${PORT}`);
     console.info(`GraphQL endpoint:\t http://localhost:${PORT}/graphql`);
-    console.info(`GraphiQL endpoint:\t http://localhost:${PORT}/graphiql`);
+    // console.info(`GraphiQL endpoint:\t http://localhost:${PORT}/graphiql`);
   });
 };
 

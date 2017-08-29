@@ -4,7 +4,7 @@
   "main": "./src/server/index.js",
   "scripts": {
     "start": "node ./src/server/index.js",
-    "start:dev": "nodemon ./src/server/index.js --watch ./src/server",
+    "start:dev": "nodemon ./src/server/index.js --watch ./src/server --watch ./src/schema",
     "webpack": "webpack -wd"
   },
   "license": "MIT",
@@ -25,10 +25,10 @@
     "webpack": "^3.5.5"
   },
   "dependencies": {
-    "apollo-server-express": "^1.1.2",
     "body-parser": "^1.17.2",
     "ejs": "^2.5.7",
     "express": "^4.15.4",
+    "express-graphql": "^0.6.11",
     "graphql": "^0.11.1",
     "graphql-tools": "^1.2.1",
     "prop-types": "^15.5.10",
