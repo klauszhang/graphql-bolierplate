@@ -1,5 +1,8 @@
 import React from 'react';
-import { QueryRenderer, graphql } from 'react-relay';
+import {
+  QueryRenderer,
+  graphql
+} from 'react-relay';
 
 import environment from '../../renderers/Environment';
 import Product from './Product';
@@ -8,8 +11,10 @@ const query = graphql`
   # query for this page
   query ProductPageQuery {
     # query for all products
-    allProducts {
-      ...Product_products
+    viewer {
+      products {
+        ...Product_products
+      }
     }
   }
 `;
@@ -28,7 +33,11 @@ class ProductPage extends React.Component {
               </div>
             );
           } else if (props) {
-            return <Product products={props.allProducts} />;
+            return (
+              <Product
+                products={props.viewer.products}
+              />
+            );
           }
           return <div>Loading data...</div>;
         }}

@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const { createServer } = require('http');
 const graphqlHTTP = require('express-graphql');
 
-const schema = require('../schema');
+const { schema } = require('../data/schema');
 
 const PORT = 3000;
 
@@ -16,7 +16,11 @@ const start = async () => {
   app.use(
     '/graphql',
     bodyParser.json(),
-    graphqlHTTP({ schema, graphiql: true })
+    graphqlHTTP({
+      schema,
+      context: { user: { id: 1 } },
+      graphiql: true
+    })
   );
 
   app.get('*', (req, res) => {
@@ -26,8 +30,12 @@ const start = async () => {
   const server = createServer(app);
   server.listen(PORT, () => {
     console.info('server up and running.');
-    console.info(`Client url: \t\t http://localhost:${PORT}`);
-    console.info(`GraphQL endpoint:\t http://localhost:${PORT}/graphql`);
+    console.info(
+      `Client url: \t\t http://localhost:${PORT}`
+    );
+    console.info(
+      `GraphQL endpoint:\t http://localhost:${PORT}/graphql`
+    );
     // console.info(`GraphiQL endpoint:\t http://localhost:${PORT}/graphiql`);
   });
 };
