@@ -21,9 +21,13 @@ export default createFragmentContainer(
   Product,
   graphql`
     # get products collection
-    fragment Product_products on Product @relay(plural: true) {
-      id
-      name
+    fragment Product_products on getProductQuery @relay(plural: true) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
     }
   `
 );

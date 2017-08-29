@@ -4,10 +4,16 @@ const WebpackShellPlugin = require('webpack-shell-plugin');
 
 const config = {
   resolve: {
-    modules: [path.resolve('./src'), path.resolve('./node_modules')]
+    modules: [path.resolve('./src/client'), path.resolve('./node_modules')]
   },
   entry: {
-    vendor: ['babel-polyfill', 'react', 'react-dom', 'prop-types'],
+    vendor: [
+      'babel-polyfill',
+      'react',
+      'react-dom',
+      'prop-types',
+      'react-relay'
+    ],
     app: ['./src/renderers/dom.js']
   },
   output: {
@@ -43,7 +49,7 @@ const config = {
     }),
     new WebpackShellPlugin({
       onBuildStart: [
-        'relay-compiler --src ./src/client --schema ./src/server/schema/typeDefs.graphql --watch'
+        'relay-compiler --src ./src/client --schema ./src/schema/typeDefs.graphql --watch'
       ]
     })
   ]

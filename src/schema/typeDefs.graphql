@@ -1,0 +1,56 @@
+# a product
+type Product {
+  # id of the product
+  id: ID!
+  # name of the product
+  name: String!
+}
+
+input CreateProductInput {
+  name: String!
+}
+
+input UpdateProductInput {
+  id: ID!
+  name: String!
+}
+
+interface Node {
+  id: ID!
+}
+
+type productNode implements Node {
+  id: ID!
+  name: String!
+}
+
+type productEdges {
+  node: productNode
+}
+
+type createProductResult {
+  node: productNode
+}
+
+type getProductQuery {
+  edges: [productEdges]
+}
+
+type Query {
+  viewer: Viewer!
+  node(id: ID!): Node
+}
+
+type Viewer {
+  allProducts: getProductQuery!
+}
+
+type Mutation {
+  createProduct(input: CreateProductInput!): Product!
+  updateProduct(input: UpdateProductInput!): Product!
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
