@@ -26,45 +26,51 @@ const {
   getUserById
 } = require('../data/database');
 
+const { GraphQLProduct } = require('./Product');
 const {
   nodeInterface,
   nodeField
-} = nodeDefinitions(
-  (globalId) => {
-    const { type, id } = fromGlobalId(globalId);
-    if (type === 'Product') {
-      return getProductById(id);
-    } else if (type === 'User') {
-      return getUserById(id);
-    }
-    return null;
-  },
-  (obj) => {
-    if (obj instanceof Product) {
-      return GraphQLProduct;
-    } else if (obj instanceof User) {
-      return;
-    }
-    return null;
-  }
-);
+} = require('./shared');
 
-const GraphQLProduct = new GraphQLObjectType({
-  name: 'Product',
-  description: 'a product',
-  fields: {
-    id: globalIdField('Product'),
-    name: {
-      type: GraphQLString,
-      resolve: (obj) => obj.name
-    },
-    isActive: {
-      type: GraphQLBoolean,
-      resolve: (obj) => obj.isActive
-    }
-  },
-  interfaces: [nodeInterface]
-});
+// const {
+//   nodeInterface,
+//   nodeField
+// } = nodeDefinitions(
+//   (globalId) => {
+//     const { type, id } = fromGlobalId(globalId);
+//     if (type === 'Product') {
+//       return getProductById(id);
+//     } else if (type === 'User') {
+//       return getUserById(id);
+//     }
+//     return null;
+//   },
+//   (obj) => {
+//     if (obj instanceof Product) {
+//       return GraphQLProduct;
+//     } else if (obj instanceof User) {
+//       return;
+//     }
+//     return null;
+//   }
+// );
+
+// const GraphQLProduct = new GraphQLObjectType({
+//   name: 'Product',
+//   description: 'a product',
+//   fields: {
+//     id: globalIdField('Product'),
+//     name: {
+//       type: GraphQLString,
+//       resolve: (obj) => obj.name
+//     },
+//     isActive: {
+//       type: GraphQLBoolean,
+//       resolve: (obj) => obj.isActive
+//     }
+//   },
+//   interfaces: [nodeInterface]
+// });
 
 const {
   connectionType: ProductConnection

@@ -4,7 +4,7 @@ const path = require('path');
 const config = {
   resolve: {
     modules: [
-      path.resolve('./src'),
+      path.resolve('./src/client'),
       path.resolve('./node_modules')
     ]
   },
@@ -31,7 +31,10 @@ const config = {
           loader: 'babel-loader',
           options: {
             presets: ['react', 'env', 'stage-2'],
-            plugins: ['relay']
+            plugins: [
+              'relay',
+              'transform-runtime'
+            ]
           }
         }
       },

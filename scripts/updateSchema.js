@@ -10,4 +10,4 @@ const schemaPath = path.resolve(
 
 fs.writeFileSync(schemaPath, printSchema(schema));
 
-console.log('Wrote ' + schemaPath);
+console.log('> Wrote ' + schemaPath);

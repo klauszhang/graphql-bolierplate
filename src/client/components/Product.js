@@ -12,11 +12,19 @@ class Product extends Component {
           ({ node }) => {
             return (
               <div key={node.id}>
-                {node.name}
+                {node.name}-{node.isActive.toString()}
               </div>
             );
           }
         )}
+
+        <div>
+          <label>
+            new product name
+            <input />
+          </label>
+          <button>Ok</button>
+        </div>
       </div>
     );
   }
@@ -31,6 +39,7 @@ export default createFragmentContainer(
         node {
           id
           name
+          isActive
         }
       }
     }

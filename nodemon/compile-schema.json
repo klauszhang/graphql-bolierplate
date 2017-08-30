@@ -6,8 +6,7 @@
   ],
   "verbose": false,
   "execMap": {
-    "js":
-      "babel-node ./scripts/updateSchema.js && relay-compiler --src ./src/client --schema ./src/schema/schema.graphql"
+    "js": "babel-node ./scripts/updateSchema.js"
   },
   "events": {
     "restart":
