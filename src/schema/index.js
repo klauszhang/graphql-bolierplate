@@ -23,9 +23,8 @@ const {
   User,
   getProducts,
   getProductById,
-  getUserById,
-  getUsers
-} = require('./database');
+  getUserById
+} = require('../data/database');
 
 const {
   nodeInterface,
@@ -52,6 +51,7 @@ const {
 
 const GraphQLProduct = new GraphQLObjectType({
   name: 'Product',
+  description: 'a product',
   fields: {
     id: globalIdField('Product'),
     name: {
@@ -72,6 +72,9 @@ const {
 } = connectionDefinitions({
   name: 'Product',
   nodeType: GraphQLProduct
+  // resolveCursor: (source, args, context) => {
+  //   console.log(source);
+  // }
 });
 
 const GraphQLUser = new GraphQLObjectType({
@@ -81,7 +84,6 @@ const GraphQLUser = new GraphQLObjectType({
     name: {
       type: GraphQLString,
       resolve: (obj) => {
-        console.log(obj);
         return obj.name;
       }
     },
@@ -113,7 +115,6 @@ const Query = new GraphQLObjectType({
         return getUserById(context.user.id);
       }
     },
-
     node: nodeField
   }
 });

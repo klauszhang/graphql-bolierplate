@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const WebpackShellPlugin = require('webpack-shell-plugin');
 
 const config = {
   resolve: {
@@ -49,11 +48,6 @@ const config = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor'
-    }),
-    new WebpackShellPlugin({
-      onBuildStart: [
-        'relay-compiler --src ./src/client --schema ./src/data/schema.graphql --watch'
-      ]
     })
   ]
 };

@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "main": "./src/server/index.js",
   "scripts": {
-    "start": "node ./src/server/index.js",
-    "start:dev": "nodemon ./src/server/index.js --watch ./src/server --watch ./src/schema --exec babel-node ",
-    "compile": "yarn update-schema && yarn webpack",
-    "update-schema": "babel-node ./scripts/updateSchema.js",
-    "webpack": "webpack -wd"
+    "start": "babel-node ./src/server/index.js",
+    "start:dev":
+      "yarn run-p compile:watch webpack server:watch",
+    "compile:watch":
+      "nodemon --config ./nodemon/compile-schema.json",
+    "webpack": "webpack -wd",
+    "server:watch":
+      "nodemon --config ./nodemon/restart-server.json"
   },
   "license": "MIT",
   "devDependencies": {
@@ -42,7 +45,6 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-relay": "^1.2.0",
-    "webpack-shell-plugin": "^0.5.0"
+    "react-relay": "^1.2.0"
   }
 }

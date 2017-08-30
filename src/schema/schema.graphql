@@ -19,6 +19,7 @@ type PageInfo {
   endCursor: String
 }
 
+# a product
 type Product implements Node {
   # The ID of an object
   id: ID!

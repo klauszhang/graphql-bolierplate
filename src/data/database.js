@@ -1,5 +1,7 @@
 const products = [
-  { id: 1, name: 'hello!', isActive: true }
+  { id: 1, name: 'hello!', isActive: true },
+  { id: 2, name: 'hello222!', isActive: true },
+  { id: 3, name: 'hello333!', isActive: true }
 ];
 const users = [
   { id: 1, name: 'world', productIds: [1] }

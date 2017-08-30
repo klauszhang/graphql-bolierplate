@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const { createServer } = require('http');
 const graphqlHTTP = require('express-graphql');
 
-const { schema } = require('../data/schema');
+const { schema } = require('../schema');
 
 const PORT = 3000;
 
@@ -29,13 +29,14 @@ const start = async () => {
 
   const server = createServer(app);
   server.listen(PORT, () => {
-    console.info('server up and running.');
+    console.info('\n> server up and running.');
     console.info(
-      `Client url: \t\t http://localhost:${PORT}`
+      `> Client url: \t\t http://localhost:${PORT}`
     );
     console.info(
-      `GraphQL endpoint:\t http://localhost:${PORT}/graphql`
+      `> GraphQL endpoint:\t http://localhost:${PORT}/graphql \n`
     );
+
     // console.info(`GraphiQL endpoint:\t http://localhost:${PORT}/graphiql`);
   });
 };
