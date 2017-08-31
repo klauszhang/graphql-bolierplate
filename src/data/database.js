@@ -6,6 +6,7 @@ const products = [
 const users = [
   { id: 1, name: 'world', productIds: [1] }
 ];
+let lastProductId = 4;
 
 class Product {
   id;
@@ -23,11 +24,22 @@ function getProducts(isActive = true) {
 }
 
 function getProductById(id) {
-  return products.find((d) => d.id === id);
+  return products.find((d) => d.id === parseInt(id));
+}
+
+function addProduct(product) {
+  const id = ++lastProductId;
+  const newProduct = {
+    id,
+    name: product.name,
+    isActive: true
+  };
+  products.push(newProduct);
+  return newProduct;
 }
 
 function getUserById(id) {
-  return users.find((u) => u.id === id);
+  return users.find((u) => u.id === parseInt(id));
 }
 
 function getUsers() {
@@ -39,6 +51,7 @@ export {
   User,
   getProductById,
   getProducts,
+  addProduct,
   getUserById,
   getUsers
 };

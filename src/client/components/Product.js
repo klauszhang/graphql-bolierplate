@@ -8,15 +8,13 @@ class Product extends Component {
   render() {
     return (
       <div>
-        {this.props.products.edges.map(
-          ({ node }) => {
-            return (
-              <div key={node.id}>
-                {node.name}-{node.isActive.toString()}
-              </div>
-            );
-          }
-        )}
+        {this.props.products.edges.map(({ node }) => {
+          return (
+            <div key={node.id}>
+              {node.name} - {node.isActive.toString()}
+            </div>
+          );
+        })}
 
         <div>
           <label>

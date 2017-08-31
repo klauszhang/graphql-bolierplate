@@ -27,8 +27,8 @@ const GraphQLProduct = new GraphQLObjectType({
 });
 
 const {
-  connectionType: ProductConnection
-  // edgeType: GraphQLProductEdge
+  connectionType: ProductConnection,
+  edgeType: GraphQLProductEdge
 } = connectionDefinitions({
   name: 'Product',
   nodeType: GraphQLProduct
@@ -37,4 +37,8 @@ const {
   // }
 });
 
-export { ProductConnection, GraphQLProduct };
+export {
+  ProductConnection,
+  GraphQLProduct,
+  GraphQLProductEdge
+};

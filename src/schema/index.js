@@ -1,11 +1,16 @@
 import {
   GraphQLObjectType,
-  GraphQLSchema
+  GraphQLSchema,
+  GraphQLList
 } from 'graphql';
-import { getUserById } from '../data/database';
+import {
+  getUserById,
+  getProducts
+} from '../data/database';
 import { GraphQLUser } from './User';
-
-import { nodeField } from './nodeDefinations'; //<- this will fail!
+import { GraphQLProduct } from './Product';
+import { nodeField } from './nodeDefinations';
+import { GraphQLAddProductMutation } from './ProductMutation';
 
 const Query = new GraphQLObjectType({
   name: 'Query',
@@ -16,12 +21,26 @@ const Query = new GraphQLObjectType({
         return getUserById(context.user.id);
       }
     },
-    node: nodeField
+    node: nodeField,
+    allProducts: {
+      type: new GraphQLList(GraphQLProduct),
+      resolve: () => {
+        return getProducts();
+      }
+    }
+  }
+});
+
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addProduct: GraphQLAddProductMutation
   }
 });
 
 const schema = new GraphQLSchema({
-  query: Query
+  query: Query,
+  mutation: Mutation
 });
 
 export { schema };

@@ -1,20 +1,17 @@
 {
   "restartable": "rs",
-  "ignore": [
-    ".git",
-    "node_modules/**/node_modules"
-  ],
+  "ignore": [".git", "node_modules/**/node_modules"],
   "verbose": false,
   "execMap": {
     "js": "babel-node ./src/server/index.js"
   },
   "events": {
-    "restart":
-      "echo '> server changed, restarting...'"
+    "restart": "echo '> server changed, restarting...'"
   },
-  "watch": ["src/server", "src/data"],
+  "watch": ["src/server", "src/data", "src/schema"],
   "env": {
     "NODE_ENV": "development"
   },
+  "delay": "1000",
   "ext": "js"
 }

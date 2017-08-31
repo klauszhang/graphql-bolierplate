@@ -3,7 +3,7 @@ import {
   connectionArgs,
   connectionFromArray
 } from 'graphql-relay';
-import { getProducts } from '../data/database';
+import { getProductById } from '../data/database';
 import {
   GraphQLString,
   GraphQLBoolean,
@@ -31,11 +31,16 @@ const GraphQLUser = new GraphQLObjectType({
         },
         ...connectionArgs
       },
-      resolve: (obj, { isActive, ...args }) =>
-        connectionFromArray(
-          getProducts(isActive),
+      resolve: (obj, { isActive, ...args }) => {
+        return connectionFromArray(
+          obj.productIds
+            .map((id) => getProductById(id))
+            .filter(
+              (product) => product.isActive === isActive
+            ),
           args
-        )
+        );
+      }
     }
   },
   interfaces: [nodeInterface]

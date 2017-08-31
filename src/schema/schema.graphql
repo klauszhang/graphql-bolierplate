@@ -1,3 +1,18 @@
+input AddProductInput {
+  name: String!
+  clientMutationId: String
+}
+
+type AddProductPayload {
+  productEdge: ProductEdge
+  viewer: User
+  clientMutationId: String
+}
+
+type Mutation {
+  addProduct(input: AddProductInput!): AddProductPayload
+}
+
 # An object with an ID
 interface Node {
   # The id of the object.
@@ -53,6 +68,7 @@ type Query {
     # The ID of an object
     id: ID!
   ): Node
+  allProducts: [Product]
 }
 
 type User implements Node {
