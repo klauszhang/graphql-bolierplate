@@ -1,24 +1,13 @@
-const {
+import {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLSchema,
-  GraphQLBoolean,
-  GraphQLInt,
-  GraphQLNonNull,
-  GraphQLInputObjectType,
-  GraphQLList
-} = require('graphql');
-
-const {
-  nodeDefinitions,
-  fromGlobalId,
+  GraphQLBoolean
+} from 'graphql';
+import {
   globalIdField,
-  connectionDefinitions,
-  connectionArgs,
-  connectionFromArray
-} = require('graphql-relay');
-
-const { nodeInterface } = require('./shared');
+  connectionDefinitions
+} from 'graphql-relay';
+import { nodeInterface } from './nodeDefinations';
 
 const GraphQLProduct = new GraphQLObjectType({
   name: 'Product',
@@ -37,4 +26,15 @@ const GraphQLProduct = new GraphQLObjectType({
   interfaces: [nodeInterface]
 });
 
-exports.GraphQLProduct = GraphQLProduct;
+const {
+  connectionType: ProductConnection
+  // edgeType: GraphQLProductEdge
+} = connectionDefinitions({
+  name: 'Product',
+  nodeType: GraphQLProduct
+  // resolveCursor: (source, args, context) => {
+  //   console.log(source);
+  // }
+});
+
+export { ProductConnection, GraphQLProduct };

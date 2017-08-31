@@ -1,16 +1,13 @@
 {
   "restartable": "rs",
-  "ignore": [
-    ".git",
-    "node_modules/**/node_modules"
-  ],
+  "ignore": [".git", "node_modules/**/node_modules"],
   "verbose": false,
   "execMap": {
-    "js": "babel-node ./scripts/updateSchema.js"
+    "js":
+      "babel-node --harmony ./scripts/updateSchema.js"
   },
   "events": {
-    "restart":
-      "echo '> schema changed, compiling...'"
+    "restart": "echo '> schema changed, compiling...'"
   },
   "watch": ["src/schema"],
   "env": {

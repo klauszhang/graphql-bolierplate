@@ -1,9 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { createServer } = require('http');
-const graphqlHTTP = require('express-graphql');
+import express from 'express';
+import bodyParser from 'body-parser';
+import { createServer } from 'http';
+import graphqlHTTP from 'express-graphql';
 
-const { schema } = require('../schema');
+import { schema } from '../schema';
 
 const PORT = 3000;
 

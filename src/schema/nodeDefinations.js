@@ -1,26 +1,17 @@
-const {
+import {
   Product,
   User,
-  getProducts,
   getProductById,
   getUserById
-} = require('../data/database');
-
-const {
+} from '../data/database';
+import {
   nodeDefinitions,
-  fromGlobalId,
-  globalIdField,
-  connectionDefinitions,
-  connectionArgs,
-  connectionFromArray
-} = require('graphql-relay');
+  fromGlobalId
+} from 'graphql-relay';
+import { GraphQLProduct } from './Product';
+import { GraphQLUser } from './User';
 
-const { GraphQLProduct } = require('./Product');
-
-const {
-  nodeInterface,
-  nodeField
-} = nodeDefinitions(
+const { nodeInterface, nodeField } = nodeDefinitions(
   (globalId) => {
     const { type, id } = fromGlobalId(globalId);
     if (type === 'Product') {
@@ -34,11 +25,10 @@ const {
     if (obj instanceof Product) {
       return GraphQLProduct;
     } else if (obj instanceof User) {
-      return;
+      return GraphQLUser;
     }
     return null;
   }
 );
 
-exports.nodeInterface = nodeInterface;
-exports.nodeField = nodeField;
+export { nodeInterface, nodeField };
