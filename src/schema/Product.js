@@ -31,10 +31,10 @@ const {
   edgeType: GraphQLProductEdge
 } = connectionDefinitions({
   name: 'Product',
-  nodeType: GraphQLProduct
-  // resolveCursor: (source, args, context) => {
-  //   console.log(source);
-  // }
+  nodeType: GraphQLProduct,
+  resolveCursor: (source, args, context) => {
+    // todo
+  }
 });
 
 export {

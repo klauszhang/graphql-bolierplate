@@ -1,22 +1,29 @@
-const products = [
-  { id: 1, name: 'hello!', isActive: true },
-  { id: 2, name: 'hello222!', isActive: true },
-  { id: 3, name: 'hello333!', isActive: true }
-];
-const users = [
-  { id: 1, name: 'world', productIds: [1] }
-];
-let lastProductId = 4;
+const products = [];
+const users = [];
+let lastProductId = 0;
+let lastUserId = 0;
 
 class Product {
-  id;
+  constructor(name) {
+    this.name = name;
+  }
+  id = lastProductId;
   name;
+  isActive = true;
 }
 
 class User {
-  id;
+  constructor(name) {
+    this.name = name;
+  }
+  addProductId = (id) => {
+    this.productIds = [
+      ...new Set(this.productIds).add(id)
+    ];
+  };
+  id = lastUserId;
   name;
-  productIds;
+  productIds = [];
 }
 
 function getProducts(isActive = true) {
@@ -28,12 +35,8 @@ function getProductById(id) {
 }
 
 function addProduct(product) {
-  const id = ++lastProductId;
-  const newProduct = {
-    id,
-    name: product.name,
-    isActive: true
-  };
+  lastProductId++;
+  const newProduct = new Product(product.name);
   products.push(newProduct);
   return newProduct;
 }
@@ -45,6 +48,17 @@ function getUserById(id) {
 function getUsers() {
   return users;
 }
+
+function addUser(user) {
+  lastUserId++;
+  const newUser = new User(user.name);
+  users.push(newUser);
+  return newUser;
+}
+
+const product = addProduct({ name: 'hello' });
+const worldUser = addUser({ name: 'world' });
+worldUser.addProductId(product.id);
 
 export {
   Product,
