@@ -1,14 +1,49 @@
-const { makeExecutableSchema } = require('graphql-tools');
-const resolvers = require('./resolvers');
-const fs = require('fs');
-const path = require('path');
+import {
+  GraphQLObjectType,
+  GraphQLSchema,
+  GraphQLList
+} from 'graphql';
+import {
+  getUserById,
+  getProducts
+} from '../data/database';
+import { GraphQLUser } from './User';
+import { GraphQLProduct } from './Product';
+import { nodeField } from './nodeDefinations';
+import { GraphQLAddProductMutation } from './ProductMutation';
 
-const typeDefs = fs.readFileSync(
-  path.resolve(__dirname, 'typeDefs.graphql'),
-  'utf8'
-);
-console.log('load schema');
-module.exports = makeExecutableSchema({
-  typeDefs,
-  resolvers
+const Query = new GraphQLObjectType({
+  name: 'Query',
+  fields: {
+    viewer: {
+      type: GraphQLUser,
+      resolve: (root, args, context) => {
+        if (!context.user) {
+          throw new Error('authentication error');
+        }
+        return getUserById(context.user.id);
+      }
+    },
+    node: nodeField,
+    allProducts: {
+      type: new GraphQLList(GraphQLProduct),
+      resolve: () => {
+        return getProducts();
+      }
+    }
+  }
 });
+
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addProduct: GraphQLAddProductMutation
+  }
+});
+
+const schema = new GraphQLSchema({
+  query: Query,
+  mutation: Mutation
+});
+
+export { schema };
