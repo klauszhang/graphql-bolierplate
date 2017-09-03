@@ -1,8 +1,8 @@
 import React from 'react';
 import { QueryRenderer, graphql } from 'react-relay';
 
-import environment from '../../renderers/Environment';
-import Product from './Product';
+import environment from '../../renderers/environment';
+import ProductList from './ProductList';
 
 const query = graphql`
   # query for this page
@@ -10,9 +10,8 @@ const query = graphql`
     # query for all products
     viewer {
       name
-      products {
-        ...Product_products
-      }
+      # spread the list stuff
+      ...ProductList_viewer
     }
   }
 `;
@@ -25,24 +24,18 @@ class ProductPage extends React.Component {
         query={query}
         render={({ error, props }) => {
           if (error) {
+            // when error
             return <div>{error.message}</div>;
           } else if (props) {
+            // when success
             return (
               <div>
                 hello {props.viewer.name}
-                <Product
-                  products={props.viewer.products}
-                />
-                <div>
-                  <button
-                    onClick={() => this.forceUpdate()}
-                  >
-                    Reload
-                  </button>
-                </div>
+                <ProductList viewer={props.viewer} />
               </div>
             );
           }
+          // when loading
           return <div>Loading data...</div>;
         }}
       />

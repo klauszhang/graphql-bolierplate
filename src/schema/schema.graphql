@@ -1,5 +1,6 @@
 input AddProductInput {
   name: String!
+  userId: String!
   clientMutationId: String
 }
 

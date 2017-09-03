@@ -1,45 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   createFragmentContainer,
   graphql
 } from 'react-relay';
 
-class Product extends Component {
-  render() {
-    return (
-      <div>
-        {this.props.products.edges.map(({ node }) => {
-          return (
-            <div key={node.id}>
-              {node.name} - {node.isActive.toString()}
-            </div>
-          );
-        })}
-
-        <div>
-          <label>
-            new product name
-            <input />
-          </label>
-          <button>Ok</button>
-        </div>
-      </div>
-    );
-  }
-}
+const Product = (props) => {
+  return <div>{props.product.name}</div>;
+};
 
 export default createFragmentContainer(
   Product,
   graphql`
-    # get products collection
-    fragment Product_products on ProductConnection {
-      edges {
-        node {
-          id
-          name
-          isActive
-        }
-      }
+    # define a even lower level fragment. used here
+    # naming convention : [FileName]_[propertyName]
+    fragment Product_product on Product {
+      id
+      name
+      isActive
     }
   `
 );

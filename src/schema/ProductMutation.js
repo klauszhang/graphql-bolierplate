@@ -4,7 +4,8 @@ import {
 } from 'graphql';
 import {
   mutationWithClientMutationId,
-  cursorForObjectInConnection
+  cursorForObjectInConnection,
+  fromGlobalId
 } from 'graphql-relay';
 import { GraphQLUser } from './User';
 import { GraphQLProductEdge } from './Product';
@@ -20,6 +21,9 @@ const GraphQLAddProductMutation = mutationWithClientMutationId(
     name: 'AddProduct',
     inputFields: {
       name: {
+        type: new GraphQLNonNull(GraphQLString)
+      },
+      userId: {
         type: new GraphQLNonNull(GraphQLString)
       }
     },
@@ -46,8 +50,12 @@ const GraphQLAddProductMutation = mutationWithClientMutationId(
         }
       }
     },
-    mutateAndGetPayload: ({ name }) => {
-      const newProduct = addProduct({ name });
+    mutateAndGetPayload: ({ name, userId }) => {
+      const { id } = fromGlobalId(userId);
+      const newProduct = addProduct({
+        name,
+        userId: id
+      });
       return { localProductId: newProduct.id };
     }
   }

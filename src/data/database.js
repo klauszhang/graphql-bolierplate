@@ -38,6 +38,13 @@ function addProduct(product) {
   lastProductId++;
   const newProduct = new Product(product.name);
   products.push(newProduct);
+  const theUser = users.find(
+    (u) => u.id === parseInt(product.userId)
+  );
+  if (theUser) {
+    theUser.addProductId(newProduct.id);
+  }
+
   return newProduct;
 }
 
