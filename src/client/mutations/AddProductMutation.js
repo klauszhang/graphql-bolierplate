@@ -12,6 +12,8 @@ const mutation = graphql`
     addProduct(input: $input) {
       # response the newly created stuff
       productEdge {
+        __typename
+        cursor
         # grab the node
         node {
           id
@@ -39,8 +41,9 @@ function sharedUpdater(store, user, newEdge) {
   );
   // append the new object
   ConnectionHandler.insertEdgeAfter(conn, newEdge);
+  // ConnectionHandler.update(userProxy, newEdge);
 }
-
+let tempID = 0;
 // commit mutation function
 function commit(productName, user) {
   // return a function
@@ -49,8 +52,12 @@ function commit(productName, user) {
     variables: {
       input: {
         name: productName,
-        userId: user.id
+        userId: user.id,
+        clientMutationId: tempID++
       }
+    },
+    onCompleted: (response, error) => {
+      // console.log(response);
     },
     onError: (err) => {
       console.log(err);
@@ -66,6 +73,19 @@ function commit(productName, user) {
       // use share updater to update local store
       sharedUpdater(store, user, newEdge);
     }
+    // configs: [
+    //   {
+    //     type: 'RANGE_ADD',
+    //     parentID: user.id,
+    //     connectionInfo: [
+    //       {
+    //         key: 'ProductList_products',
+    //         rangeBehavior: 'append'
+    //       }
+    //     ],
+    //     edgeName: 'productEdge'
+    //   }
+    // ]
   });
 }
 

@@ -66,7 +66,7 @@ export default createFragmentContainer(
     fragment ProductList_viewer on User {
       id
       # for product property, pagination is required when using connection
-      products(first: 10)
+      products(first: 100)
         # define connection key, so that it can be used by others
         # naming convention : [FileName]_[propertyName]
         @connection(key: "ProductList_products") {
