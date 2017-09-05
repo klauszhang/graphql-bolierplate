@@ -14,7 +14,8 @@ const config = {
       'react',
       'react-dom',
       'prop-types',
-      'react-relay'
+      'react-relay',
+      'graphiql'
     ],
     app: ['./src/renderers/dom.js']
   },
@@ -24,6 +25,8 @@ const config = {
   },
   module: {
     rules: [
+      { test: /\.flow$/, loader: 'ignore-loader' },
+
       {
         test: /.(js)$/,
         exclude: /node_modules/,
@@ -31,10 +34,7 @@ const config = {
           loader: 'babel-loader',
           options: {
             presets: ['react', 'env', 'stage-2'],
-            plugins: [
-              'relay',
-              'transform-runtime'
-            ]
+            plugins: ['relay', 'transform-runtime']
           }
         }
       },

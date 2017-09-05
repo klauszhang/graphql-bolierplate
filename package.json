@@ -4,7 +4,7 @@
   "main": "./src/server/index.js",
   "scripts": {
     "start": "babel-node ./src/server/index.js",
-    "start:dev":
+    "dev":
       "yarn run-p compile:watch schmea:watch webpack server:watch",
     "compile:watch":
       "nodemon --config ./nodemon/compile-schema.json",
@@ -30,6 +30,7 @@
     "eslint": "^4.5.0",
     "eslint-plugin-react": "^7.3.0",
     "file-loader": "^0.11.2",
+    "ignore-loader": "^0.1.2",
     "nodemon": "^1.11.0",
     "npm-run-all": "^4.1.1",
     "relay-compiler": "^1.2.0",
@@ -43,12 +44,15 @@
     "ejs": "^2.5.7",
     "express": "^4.15.4",
     "express-graphql": "^0.6.11",
+    "graphiql": "^0.11.3",
     "graphql": "^0.10.5",
     "graphql-relay": "^0.5.2",
     "graphql-tools": "^1.2.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-relay": "^1.2.0"
+    "react-relay": "^1.2.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2"
   }
 }

@@ -1,6 +1,9 @@
 import {
   GraphQLNonNull,
-  GraphQLString
+  GraphQLString,
+  GraphQLInt,
+  GraphQLBoolean,
+  GraphQLInputObjectType
 } from 'graphql';
 import {
   mutationWithClientMutationId,
@@ -8,13 +11,95 @@ import {
   fromGlobalId
 } from 'graphql-relay';
 import { GraphQLUser } from './User';
-import { GraphQLProductEdge } from './Product';
+import {
+  GraphQLProductEdge,
+  GraphQLProduct
+} from './Product';
 import {
   addProduct,
   getProductById,
+  removeProductById,
   getProducts,
-  getUserById
+  updateProduct
 } from '../data/database';
+
+const GraphQLProductUpdateInput = new GraphQLInputObjectType(
+  {
+    name: 'ProductUpdateInput',
+    fields: {
+      name: {
+        type: GraphQLString
+      },
+      isActive: {
+        type: GraphQLBoolean
+      }
+    }
+  }
+);
+
+const GraphQLUpdateProductMutation = mutationWithClientMutationId(
+  {
+    name: 'UpdateProduct',
+    inputFields: {
+      productId: {
+        type: new GraphQLNonNull(GraphQLString)
+      },
+      updatedProduct: {
+        type: new GraphQLNonNull(
+          GraphQLProductUpdateInput
+        )
+      }
+    },
+    mutateAndGetPayload: ({
+      productId,
+      updatedProduct
+    }) => {
+      const { id } = fromGlobalId(productId);
+      return {
+        updatedProduct: updateProduct(
+          id,
+          updatedProduct
+        )
+      };
+    },
+    outputFields: {
+      updatedProduct: {
+        type: GraphQLProduct,
+        resdolve: ({ updatedProduct }) =>
+          updatedProduct
+      }
+    }
+  }
+);
+
+const GraphQLRemoveProductMutation = mutationWithClientMutationId(
+  {
+    name: 'RemoveProduct',
+    inputFields: {
+      productId: {
+        type: new GraphQLNonNull(GraphQLString)
+      }
+    },
+    mutateAndGetPayload: ({ productId }, ctx) => {
+      const { id } = fromGlobalId(productId);
+
+      return {
+        removedProduct: removeProductById(
+          id,
+          ctx.user.id
+        )
+      };
+    },
+    outputFields: {
+      removedProduct: {
+        type: GraphQLProduct,
+        resolve: ({ removedProduct }) => {
+          return removedProduct;
+        }
+      }
+    }
+  }
+);
 
 const GraphQLAddProductMutation = mutationWithClientMutationId(
   {
@@ -43,10 +128,16 @@ const GraphQLAddProductMutation = mutationWithClientMutationId(
           };
         }
       },
+      totalCount: {
+        type: GraphQLInt,
+        resolve: (root, args, context) => {
+          return context.user.productIds.length;
+        }
+      },
       viewer: {
         type: GraphQLUser,
         resolve: (root, args, context) => {
-          return getUserById(context.user.id);
+          return context.user;
         }
       }
     },
@@ -61,4 +152,8 @@ const GraphQLAddProductMutation = mutationWithClientMutationId(
   }
 );
 
-export { GraphQLAddProductMutation };
+export {
+  GraphQLAddProductMutation,
+  GraphQLRemoveProductMutation,
+  GraphQLUpdateProductMutation
+};

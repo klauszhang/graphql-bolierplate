@@ -2,14 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { createServer } from 'http';
 import graphqlHTTP from 'express-graphql';
-
 import { schema } from '../schema';
 import { authenticate } from './auth';
-import UserStore from '../stores/UserStore';
-
-const userStore = new UserStore({
-  hao: { id: 1, username: 'hao', password: 'secret' }
-});
+// import UserStore from '../stores/UserStore';
+import { getUser } from '../data/database';
 
 const PORT = 3000;
 
@@ -20,7 +16,7 @@ const start = async () => {
   app.set('view engine', 'ejs');
 
   const options = async (req, res) => {
-    const user = await authenticate(req, userStore);
+    const user = await authenticate(req, getUser);
     if (!user) {
       res.status(401);
     }
@@ -28,10 +24,13 @@ const start = async () => {
       context: {
         user
       },
-      schema,
-      graphiql: true
+      schema
     };
   };
+
+  app.get('/graphql', (req, res) => {
+    res.render('index');
+  });
 
   app.use(
     '/graphql',

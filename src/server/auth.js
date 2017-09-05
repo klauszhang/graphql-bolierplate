@@ -2,7 +2,7 @@ const HEADER_REGEX = /bearer token-(.*)\|(.*)$/;
 
 async function authenticate(
   { headers: { authorization } },
-  Users
+  getUser
 ) {
   const username =
     authorization &&
@@ -14,7 +14,7 @@ async function authenticate(
   return (
     username &&
     password &&
-    (await Users.findOne({ username, password }))
+    (await getUser({ name: username, password }))
   );
 }
 export { authenticate };

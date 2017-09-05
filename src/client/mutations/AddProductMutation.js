@@ -21,6 +21,7 @@ const mutation = graphql`
           isActive
         }
       }
+      totalCount
       # grab the viewer as well
       viewer {
         id
@@ -70,8 +71,20 @@ function commit(productName, user) {
       const newEdge = payload.getLinkedRecord(
         'productEdge'
       );
-      // use share updater to update local store
+      const totalCount = payload.getValue(
+        'totalCount'
+      );
+      // use share updater to update local store about the product
       sharedUpdater(store, user, newEdge);
+
+      // update page
+      const userProxy = store.get(user.id);
+      // get link, the key is defined by @connection directive in the ql 'viewer' is defined
+      const conn = ConnectionHandler.getConnection(
+        userProxy,
+        'ProductList_products'
+      );
+      conn.setValue(totalCount, 'totalCount');
     }
     // configs: [
     //   {

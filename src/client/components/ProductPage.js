@@ -6,7 +6,10 @@ import ProductList from './ProductList';
 
 const query = graphql`
   # query for this page
-  query ProductPageQuery {
+  query ProductPageQuery(
+    $count: Int!
+    $after: String
+  ) {
     # query for all products
     viewer {
       name
@@ -22,6 +25,9 @@ class ProductPage extends React.Component {
       <QueryRenderer
         environment={environment}
         query={query}
+        variables={{
+          count: 10
+        }}
         render={({ error, props }) => {
           if (error) {
             // when error

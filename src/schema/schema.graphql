@@ -6,12 +6,15 @@ input AddProductInput {
 
 type AddProductPayload {
   productEdge: ProductEdge
+  totalCount: Int
   viewer: User
   clientMutationId: String
 }
 
 type Mutation {
   addProduct(input: AddProductInput!): AddProductPayload
+  removeProduct(input: RemoveProductInput!): RemoveProductPayload
+  updateProduct(input: UpdateProductInput!): UpdateProductPayload
 }
 
 # An object with an ID
@@ -50,6 +53,7 @@ type ProductConnection {
 
   # A list of edges.
   edges: [ProductEdge]
+  totalCount: Int
 }
 
 # An edge in a connection.
@@ -61,6 +65,11 @@ type ProductEdge {
   cursor: String!
 }
 
+input ProductUpdateInput {
+  name: String
+  isActive: Boolean
+}
+
 type Query {
   viewer: User
 
@@ -70,6 +79,27 @@ type Query {
     id: ID!
   ): Node
   allProducts: [Product]
+}
+
+input RemoveProductInput {
+  productId: String!
+  clientMutationId: String
+}
+
+type RemoveProductPayload {
+  removedProduct: Product
+  clientMutationId: String
+}
+
+input UpdateProductInput {
+  productId: String!
+  updatedProduct: ProductUpdateInput!
+  clientMutationId: String
+}
+
+type UpdateProductPayload {
+  updatedProduct: Product
+  clientMutationId: String
 }
 
 type User implements Node {

@@ -10,7 +10,11 @@ import {
 import { GraphQLUser } from './User';
 import { GraphQLProduct } from './Product';
 import { nodeField } from './nodeDefinations';
-import { GraphQLAddProductMutation } from './ProductMutation';
+import {
+  GraphQLAddProductMutation,
+  GraphQLRemoveProductMutation,
+  GraphQLUpdateProductMutation
+} from './ProductMutation';
 
 const Query = new GraphQLObjectType({
   name: 'Query',
@@ -37,7 +41,9 @@ const Query = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addProduct: GraphQLAddProductMutation
+    addProduct: GraphQLAddProductMutation,
+    removeProduct: GraphQLRemoveProductMutation,
+    updateProduct: GraphQLUpdateProductMutation
   }
 });
 

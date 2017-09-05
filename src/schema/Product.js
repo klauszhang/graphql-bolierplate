@@ -1,12 +1,16 @@
 import {
   GraphQLObjectType,
   GraphQLString,
-  GraphQLBoolean
+  GraphQLBoolean,
+  GraphQLInt
 } from 'graphql';
 import {
   globalIdField,
   connectionDefinitions
 } from 'graphql-relay';
+
+import { getUserById } from '../data/database';
+
 import { nodeInterface } from './nodeDefinations';
 
 const GraphQLProduct = new GraphQLObjectType({
@@ -31,7 +35,16 @@ const {
   edgeType: GraphQLProductEdge
 } = connectionDefinitions({
   name: 'Product',
-  nodeType: GraphQLProduct
+  nodeType: GraphQLProduct,
+  connectionFields: {
+    totalCount: {
+      type: GraphQLInt,
+      resolve: (root, args, context) => {
+        return getUserById(context.user.id).productIds
+          .length;
+      }
+    }
+  }
   // resolveCursor: (source, args, context) => {
   //   // todo
   // }
